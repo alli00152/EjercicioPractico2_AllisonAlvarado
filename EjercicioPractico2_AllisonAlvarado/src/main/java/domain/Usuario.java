@@ -14,6 +14,22 @@ import java.time.LocalDateTime;
  * @author allis
  */
 public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 150)
+    private String nombre;
+
+    @Column(nullable = false, unique = true, length = 200)
+    private String email;
+
+    @Column(nullable = false, length = 255)
+    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
 
     @Column(nullable = false)
@@ -36,7 +52,8 @@ public class Usuario {
     public String getNombre() {
         return nombre;
     }
-     public void setNombre(String nombre) {
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -59,6 +76,7 @@ public class Usuario {
     public Rol getRol() {
         return rol;
     }
+
     public void setRol(Rol rol) {
         this.rol = rol;
     }

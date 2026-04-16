@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package domain;
+
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,18 @@ import java.util.List;
  * @author allis
  */
 public class Rol {
-     public Rol() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 100)
+    private String nombre;
+
+    @OneToMany(mappedBy = "rol")
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    public Rol() {
     }
 
     public Rol(String nombre) {
@@ -36,10 +48,6 @@ public class Rol {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -49,4 +57,3 @@ public class Rol {
         this.usuarios = usuarios;
     }
 }
-

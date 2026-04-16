@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Detalle usuario')}" ></head>
+<body>
+<nav th:replace="~{general/fragmentos :: navbar}"></nav>
+<div class="container py-5">
+    <div class="card shadow border-0">
+        <div class="card-body p-4">
+            <h3 class="mb-4">Detalle del usuario</h3>
+            <p><strong>ID:</strong> <span th:text="${usuario.id}"></span></p>
+            <p><strong>Nombre:</strong> <span th:text="${usuario.nombre}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+            <p><strong>Rol:</strong> <span th:text="${usuario.rol.nombre}"></span></p>
+            <p><strong>Activo:</strong> <span th:text="${usuario.activo ? 'Sí' : 'No'}"></span></p>
+            <p><strong>Fecha de creación:</strong> <span th:text="${usuario.fechaCreacion}"></span></p>
+            <a th:href="@{/usuarios}" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+<script th:replace="~{general/fragmentos :: scripts}"></script>
+</body>
 </html>

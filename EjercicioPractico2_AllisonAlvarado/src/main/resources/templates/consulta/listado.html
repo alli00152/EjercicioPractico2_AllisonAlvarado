@@ -1,50 +1,110 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{general/fragmentos :: head('Eventos')}" ></head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Consultas')}" ></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Gestión de eventos', 'Listado general de eventos')}"></header>
+<header th:replace="~{general/fragmentos :: hero('Consultas avanzadas', 'Resultados con JPA e Hibernate')}"></header>
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Listado de eventos</h3>
-        <a sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')" th:href="@{/eventos/nuevo}" class="btn btn-rosa">Nuevo evento</a>
-    </div>
 
-    <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5>Buscar eventos por estado</h5>
+                    <form th:action="@{/consultas/eventos-estado}" method="post">
+                        <select name="activo" class="form-select mb-3">
+                            <option value="true">Activos</option>
+                            <option value="false">Inactivos</option>
+                        </select>
+                        <button class="btn btn-rosa" type="submit">Consultar</button>
+                    </form>
+                      </div>
+            </div>
+        </div>
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
-            <table class="table table-hover align-middle">
-                <thead>
-                <tr>
-                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Fecha</th>
-                    <th>Capacidad</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="evento : ${eventos}">
-                    <td th:text="${evento.id}"></td>
-                    <td th:text="${evento.nombre}"></td>
-                    <td th:text="${evento.descripcion}"></td>
-                    <td th:text="${evento.fecha}"></td>
-                    <td th:text="${evento.capacidad}"></td>
-                    <td th:text="${evento.activo ? 'Activo' : 'Inactivo'}"></td>
-                    <td>
-                        <a sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')" th:href="@{/eventos/editar/{id}(id=${evento.id})}" class="btn btn-sm btn-warning">Editar</a>
-                        <a sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')" th:href="@{/eventos/eliminar/{id}(id=${evento.id})}" class="btn btn-sm btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5>Buscar eventos por rango de fechas</h5>
+                    <form th:action="@{/consultas/eventos-fecha}" method="post">
+                        <input type="date" name="fechaInicio" class="form-control mb-2" required>
+                        <input type="date" name="fechaFin" class="form-control mb-3" required>
+                        <button class="btn btn-rosa" type="submit">Consultar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5>Buscar usuarios por rol</h5>
+                     <form th:action="@{/consultas/usuarios-rol}" method="post">
+                        <select name="rol" class="form-select mb-3">
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="ORGANIZADOR">ORGANIZADOR</option>
+                            <option value="CLIENTE">CLIENTE</option>
+                        </select>
+                        <button class="btn btn-rosa" type="submit">Consultar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5>Buscar eventos por nombre</h5>
+                    <form th:action="@{/consultas/eventos-nombre}" method="post">
+                        <input type="text" name="nombre" class="form-control mb-3" placeholder="Digite una parte del nombre" required>
+                        <button class="btn btn-rosa" type="submit">Consultar</button>
+                    </form>
+                </div>
+                 </div>
         </div>
     </div>
-</div>
+
+    <div class="alert alert-info">
+        <strong>Cantidad de eventos activos:</strong>
+        <span th:text="${conteoActivos}">0</span>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4" th:if="${eventosPorEstado != null}">
+        <div class="card-body">
+            <h4>Resultado: eventos por estado</h4>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="e : ${eventosPorEstado}" th:text="${e.nombre + ' - ' + e.fecha}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4" th:if="${eventosPorFecha != null}">
+        <div class="card-body">
+            <h4>Resultado: eventos por fechas</h4>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="e : ${eventosPorFecha}" th:text="${e.nombre + ' - ' + e.fecha}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4" th:if="${usuariosPorRol != null}">
+        <div class="card-body">
+            <h4>Resultado: usuarios por rol</h4>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="u : ${usuariosPorRol}" th:text="${u.nombre + ' - ' + u.email}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4" th:if="${eventosPorNombre != null}">
+        <div class="card-body">
+            <h4>Resultado: eventos por nombre</h4>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="e : ${eventosPorNombre}" th:text="${e.nombre + ' - ' + e.fecha}"></li>
+            </ul>
+        </div>
+    </div>
+    </div>
 <footer th:replace="~{general/fragmentos :: footer}"></footer>
 <script th:replace="~{general/fragmentos :: scripts}"></script>
 </body>

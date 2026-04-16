@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Acceso denegado')}" ></head>
+<body>
+<nav th:replace="~{general/fragmentos :: navbar}"></nav>
+<div class="container py-5 text-center">
+    <div class="card shadow border-0 p-5">
+        <h1 class="text-danger">Acceso denegado</h1>
+        <p>No tiene permisos para entrar a esta sección.</p>
+        <a th:href="@{/}" class="btn btn-rosa">Volver al inicio</a>
+    </div>
+</div>
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+<script th:replace="~{general/fragmentos :: scripts}"></script>
+</body>
 </html>

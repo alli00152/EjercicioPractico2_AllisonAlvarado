@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Formulario usuario')}" ></head>
+<body>
+<nav th:replace="~{general/fragmentos :: navbar}"></nav>
+<div class="container py-5">
+    <div class="card shadow border-0">
+        <div class="card-body p-4">
+            <h3 class="mb-4">Formulario de usuario</h3>
+            <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                  <input type="email" th:field="*{email}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" th:field="*{password}" class="form-control" placeholder="Digite una nueva o deje la misma en edición">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select th:field="*{rol}" class="form-select" required>
+                        <option value="">Seleccione un rol</option>
+                        <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" th:field="*{activo}">
+                    <label class="form-check-label">Activo</label>
+                </div>
+                  <button type="submit" class="btn btn-rosa">Guardar</button>
+                <a th:href="@{/usuarios}" class="btn btn-secondary">Volver</a>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+<script th:replace="~{general/fragmentos :: scripts}"></script>
+</body>
 </html>

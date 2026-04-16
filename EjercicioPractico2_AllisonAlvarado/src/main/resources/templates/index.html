@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<!-- Esta es la página principal del sitio web TechShop -->
-<html>
-    <head th:replace="~{general/fragmentos :: head}"/>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Inicio')}" ></head>
+<body>
+<nav th:replace="~{general/fragmentos :: navbar}"></nav>
+<header th:replace="~{general/fragmentos :: hero('Plataforma de Reservas de Eventos', 'Gestione usuarios, roles y eventos en un solo lugar')}"></header>
 
-    <body>
-        <header th:replace="~{general/fragmentos :: header}"/>
-
-        <section th:replace="~{consultas/fragmentos :: tabs}"/>
-        <section th:replace="~{consultas/fragmentos :: tarjetas}"/>
-
-        <footer th:replace="~{general/fragmentos :: footer}"/>
-    </body>
+<div class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-4" th:each="evento : ${eventos}">
+            <div class="card tarjeta-evento h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${evento.nombre}">Nombre</h5>
+                    <p class="card-text" th:text="${evento.descripcion}">Descripción</p>
+                    <p><strong>Fecha:</strong> <span th:text="${evento.fecha}"></span></p>
+                    <p><strong>Capacidad:</strong> <span th:text="${evento.capacidad}"></span></p>
+                    <span class="badge rounded-pill"
+                          th:classappend="${evento.activo} ? 'text-bg-success' : 'text-bg-secondary'"
+                          th:text="${evento.activo} ? 'Activo' : 'Inactivo'">Activo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+<script th:replace="~{general/fragmentos :: scripts}"></script>
+</body>
 </html>
-

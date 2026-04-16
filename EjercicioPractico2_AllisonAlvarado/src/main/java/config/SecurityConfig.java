@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package config;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,13 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-/**
- *
- * @author allis
- */
+
 @Configuration
 public class SecurityConfig {
-     @Bean
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -32,8 +31,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/css/**", "/js/**", "/webjars/**", "/", "/login").permitAll()
                 .requestMatchers("/roles/**", "/usuarios/**").hasRole("ADMIN")
-                .requestMatchers("/eventos/nuevo", "/eventos/guardar", "/eventos/editar/**", "/eventos/eliminar/**").hasAnyRole("ADMIN", "ORGANIZADOR")
-                .requestMatchers("/eventos/**", "/consultas/**").hasAnyRole("ADMIN", "ORGANIZADOR", "CLIENTE")
+                .requestMatchers("/eventos/nuevo", "/eventos/guardar", "/eventos/editar/**", "/eventos/eliminar/**")
+                    .hasAnyRole("ADMIN", "ORGANIZADOR")
+                .requestMatchers("/eventos/**", "/consultas/**")
+                    .hasAnyRole("ADMIN", "ORGANIZADOR", "CLIENTE")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -43,7 +44,7 @@ public class SecurityConfig {
                 .successHandler(successHandler())
                 .permitAll()
             )
-                .logout(logout -> logout
+            .logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
             )
@@ -61,13 +62,13 @@ public class SecurityConfig {
                                                 HttpServletResponse response,
                                                 org.springframework.security.core.Authentication authentication)
                     throws IOException, ServletException {
-                
-            }
-            
+
                 boolean esAdmin = authentication.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
                 boolean esOrganizador = authentication.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_ORGANIZADOR"));
+
                 boolean esCliente = authentication.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_CLIENTE"));
 
@@ -83,4 +84,4 @@ public class SecurityConfig {
             }
         };
     }
-
+}
