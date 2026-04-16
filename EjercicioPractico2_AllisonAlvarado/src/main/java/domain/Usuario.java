@@ -32,7 +32,7 @@ public class Usuario {
     @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
 
-     @Column(name = "ac2vo", nullable = false)
+    @Column(nullable = false)
     private Boolean activo = true;
 
     @Column(name = "fecha_creacion", insertable = false, updatable = false)

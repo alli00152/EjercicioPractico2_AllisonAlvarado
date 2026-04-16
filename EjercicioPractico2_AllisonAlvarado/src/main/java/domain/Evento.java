@@ -29,7 +29,7 @@ public class Evento {
     @Column(nullable = false)
     private Integer capacidad;
     
-      @Column(name = "ac2vo", nullable = false)
+     @Column(nullable = false)
     private Boolean activo = true;
 
     public Evento() {
