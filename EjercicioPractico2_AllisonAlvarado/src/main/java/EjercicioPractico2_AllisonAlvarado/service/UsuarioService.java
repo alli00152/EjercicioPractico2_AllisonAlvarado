@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package service;
-import domain.Usuario;
-import repository.UsuarioRepository;
+package EjercicioPractico2_AllisonAlvarado.service;
+import EjercicioPractico2_AllisonAlvarado.domain.Usuario;
+import EjercicioPractico2_AllisonAlvarado.repository.UsuarioRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
