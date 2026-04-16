@@ -13,87 +13,100 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top shadow-sm">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" th:href="@{/}">
-            <i class="fa-solid fa-calendar-check"></i>
-            <span>Eventia</span>
+
+        <a class="navbar-brand brand-wrap" th:href="@{/}">
+            <span class="brand-mark">
+                <i class="fa-solid fa-calendar-check"></i>
+            </span>
+            <span class="brand-text-wrap">
+                <span class="brand-title">Eventia</span>
+                <small class="brand-subtitle">Plataforma de eventos</small>
+            </span>
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
+        <button class="navbar-toggler border-0 shadow-none" type="button"
+                data-bs-toggle="collapse" data-bs-target="#menuNav"
                 aria-controls="menuNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="menuNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <ul class="navbar-nav mx-auto mb-3 mb-lg-0 navbar-center-menu">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">
-                        <i class="fa-solid fa-house me-1"></i>Inicio
+                    <a class="nav-link nav-pill" th:href="@{/}">
+                        <i class="fa-solid fa-house me-2"></i>Inicio
                     </a>
                 </li>
 
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/usuarios}">
-                        <i class="fa-solid fa-users me-1"></i>Usuarios
+                    <a class="nav-link nav-pill" th:href="@{/usuarios}">
+                        <i class="fa-solid fa-users me-2"></i>Usuarios
                     </a>
                 </li>
 
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/roles}">
-                        <i class="fa-solid fa-user-shield me-1"></i>Roles
+                    <a class="nav-link nav-pill" th:href="@{/roles}">
+                        <i class="fa-solid fa-user-shield me-2"></i>Roles
                     </a>
                 </li>
 
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR','CLIENTE')">
-                    <a class="nav-link" th:href="@{/eventos}">
-                        <i class="fa-solid fa-ticket me-1"></i>Eventos
+                    <a class="nav-link nav-pill" th:href="@{/eventos}">
+                        <i class="fa-solid fa-ticket me-2"></i>Eventos
                     </a>
                 </li>
 
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR','CLIENTE')">
-                    <a class="nav-link" th:href="@{/consultas}">
-                        <i class="fa-solid fa-magnifying-glass me-1"></i>Consultas
+                    <a class="nav-link nav-pill" th:href="@{/consultas}">
+                        <i class="fa-solid fa-chart-line me-2"></i>Consultas
                     </a>
                 </li>
             </ul>
 
-            <ul class="navbar-nav align-items-lg-center">
-                <li class="nav-item me-lg-2" sec:authorize="!isAuthenticated()">
-                    <a class="btn btn-light btn-sm rounded-pill px-3" th:href="@{/login}">
-                        <i class="fa-solid fa-right-to-bracket me-1"></i>Ingresar
-                    </a>
-                </li>
+            <div class="navbar-actions d-flex align-items-center gap-2">
+                <span sec:authorize="isAuthenticated()" class="session-pill">
+                    <i class="fa-solid fa-circle-check me-1"></i>En línea
+                </span>
 
-                <li class="nav-item me-lg-2" sec:authorize="isAuthenticated()">
-                    <span class="nav-link text-white-50">Sesión activa</span>
-                </li>
+                <a sec:authorize="!isAuthenticated()"
+                   class="btn btn-light btn-sm rounded-pill px-3"
+                   th:href="@{/login}">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i>Ingresar
+                </a>
 
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="post" class="m-0">
-                        <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                            <i class="fa-solid fa-right-from-bracket me-1"></i>Salir
-                        </button>
-                    </form>
-                </li>
-            </ul>
+                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="m-0">
+                    <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="fa-solid fa-right-from-bracket me-1"></i>Salir
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
 
-<header th:fragment="hero(titulo, subtitulo)" class="hero-section py-5 mb-4">
+<header th:fragment="hero(titulo, subtitulo)" class="hero-section">
     <div class="container">
-        <div class="hero-card mx-auto text-center">
-            <h1 class="fw-bold mb-2" th:text="${titulo}">Título</h1>
-            <p class="text-muted mb-0" th:text="${subtitulo}">Subtítulo</p>
+        <div class="hero-shell">
+            <div class="hero-content text-center">
+                <h1 class="hero-title mb-2" th:text="${titulo}">Título</h1>
+                <p class="hero-subtitle mb-0" th:if="${subtitulo != null and !#strings.isEmpty(subtitulo)}" th:text="${subtitulo}">Subtítulo</p>
+            </div>
         </div>
     </div>
 </header>
 
-<footer th:fragment="footer" class="footer-custom mt-5">
-    <div class="container py-4 text-center">
-        <p class="mb-1 fw-semibold">Plataforma de Reservas de Eventos</p>
-        <small class="text-muted">Proyecto de Desarrollo de Aplicaciones Web y Patrones</small>
+<footer th:fragment="footer" class="footer-custom">
+    <div class="container py-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <div>
+                <p class="mb-0 fw-semibold">Eventia</p>
+                <small class="text-muted">Plataforma de Reservas de Eventos</small>
+            </div>
+            <small class="text-muted">Proyecto de Desarrollo de Aplicaciones Web y Patrones</small>
+        </div>
     </div>
 </footer>
 

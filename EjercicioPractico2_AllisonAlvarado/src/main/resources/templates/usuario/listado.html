@@ -3,57 +3,61 @@
 <head th:replace="~{general/fragmentos :: head('Usuarios')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Gestión de usuarios', 'Administre la información de los usuarios del sistema')}"></header>
+<header th:replace="~{general/fragmentos :: hero('Gestión de usuarios', 'Visualice, edite y administre los usuarios del sistema')}"></header>
 
-<div class="container">
+<div class="container pb-5">
     <div class="section-box">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
             <div>
-                <h3 class="fw-bold mb-1">Listado de usuarios</h3>
-                <p class="text-muted mb-0">Visualice, edite o consulte cada registro</p>
+                <h3 class="fw-bold mb-1">Panel de usuarios</h3>
+                <p class="text-muted mb-0">Organice el acceso y la información de cada usuario</p>
             </div>
 
-            <div class="page-actions">
-                <a th:href="@{/usuarios/nuevo}" class="btn btn-rosa rounded-pill px-4">
-                    <i class="fa-solid fa-plus me-2"></i>Nuevo usuario
-                </a>
-            </div>
+            <a th:href="@{/usuarios/nuevo}" class="btn btn-rosa rounded-pill px-4">
+                <i class="fa-solid fa-plus me-2"></i>Nuevo usuario
+            </a>
         </div>
 
         <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
 
-        <div class="table-responsive" th:if="${usuarios != null and !#lists.isEmpty(usuarios)}">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Activo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}"></td>
-                        <td th:text="${usuario.nombre}"></td>
-                        <td th:text="${usuario.email}"></td>
-                        <td th:text="${usuario.rol.nombre}"></td>
-                        <td>
-                            <span th:if="${usuario.activo}" class="badge-soft-success">Sí</span>
-                            <span th:if="${!usuario.activo}" class="badge-soft-secondary">No</span>
-                        </td>
-                        <td>
-                            <div class="table-actions">
-                                <a th:href="@{/usuarios/detalle/{id}(id=${usuario.id})}" class="btn btn-outline-rosa btn-sm rounded-pill">Detalle</a>
-                                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm rounded-pill text-white">Editar</a>
-                                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm rounded-pill">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="table-shell" th:if="${usuarios != null and !#lists.isEmpty(usuarios)}">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.id}"></td>
+                            <td>
+                                <div class="fw-semibold" th:text="${usuario.nombre}"></div>
+                            </td>
+                            <td th:text="${usuario.email}"></td>
+                            <td>
+                                <span class="role-chip" th:text="${usuario.rol.nombre}"></span>
+                            </td>
+                            <td>
+                                <span th:if="${usuario.activo}" class="badge-soft-success">Sí</span>
+                                <span th:if="${!usuario.activo}" class="badge-soft-secondary">No</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <a th:href="@{/usuarios/detalle/{id}(id=${usuario.id})}" class="btn btn-outline-rosa btn-sm rounded-pill">Detalle</a>
+                                    <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm rounded-pill text-white">Editar</a>
+                                    <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm rounded-pill">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="empty-box" th:if="${usuarios == null or #lists.isEmpty(usuarios)}">

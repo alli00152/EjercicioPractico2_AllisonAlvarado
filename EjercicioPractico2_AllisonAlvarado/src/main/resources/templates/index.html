@@ -3,40 +3,94 @@
 <head th:replace="~{general/fragmentos :: head('Inicio')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Plataforma de Reservas de Eventos', 'Gestione usuarios, roles y eventos en un entorno moderno y ordenado')}"></header>
 
-<div class="container">
-    <div class="row g-4" th:if="${eventos != null and !#lists.isEmpty(eventos)}">
-        <div class="col-md-6 col-lg-4" th:each="evento : ${eventos}">
-            <div class="card event-card border-0">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h5 class="fw-bold mb-0" th:text="${evento.nombre}">Nombre</h5>
-                        <span th:if="${evento.activo}" class="badge-soft-success">Activo</span>
-                        <span th:if="${!evento.activo}" class="badge-soft-secondary">Inactivo</span>
-                    </div>
 
-                    <p class="text-muted mb-3" th:text="${evento.descripcion}">Descripción</p>
+<div class="container pb-5">
 
-                    <p class="mb-2">
-                        <i class="fa-solid fa-calendar-days me-2 text-secondary"></i>
-                        <span th:text="${evento.fecha}">2026-05-10</span>
-                    </p>
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="metric-card">
+                <div class="metric-icon pink">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <div>
+                    <p class="metric-label mb-1">Eventos visibles</p>
+                    <h3 class="metric-value mb-0" th:text="${eventos != null ? #lists.size(eventos) : 0}">0</h3>
+                </div>
+            </div>
+        </div>
 
-                    <p class="mb-0">
-                        <i class="fa-solid fa-users me-2 text-secondary"></i>
-                        Capacidad:
-                        <span th:text="${evento.capacidad}">100</span>
-                    </p>
+        <div class="col-md-4">
+            <div class="metric-card">
+                <div class="metric-icon soft">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <div>
+                    <p class="metric-label mb-1">Experiencia</p>
+                    <h3 class="metric-value mb-0">Premium</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="metric-card">
+                <div class="metric-icon dark">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <p class="metric-label mb-1">Sistema</p>
+                    <h3 class="metric-value mb-0">Activo</h3>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="section-box empty-box" th:if="${eventos == null or #lists.isEmpty(eventos)}">
-        <i class="fa-solid fa-calendar-xmark fa-2x mb-3 text-secondary"></i>
-        <h5 class="fw-bold">No hay eventos registrados</h5>
-        <p class="mb-0">Cuando agregue eventos, aparecerán aquí.</p>
+    <div class="section-box mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h3 class="fw-bold mb-1">Explorar eventos</h3>
+                <p class="text-muted mb-0">Consulte los eventos disponibles en la plataforma</p>
+            </div>
+        </div>
+
+        <div class="row g-4" th:if="${eventos != null and !#lists.isEmpty(eventos)}">
+            <div class="col-md-6 col-xl-4" th:each="evento : ${eventos}">
+                <div class="card event-card border-0">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="mini-badge">
+                                <i class="fa-solid fa-ticket me-1"></i>Evento
+                            </span>
+                            <span th:if="${evento.activo}" class="badge-soft-success">Activo</span>
+                            <span th:if="${!evento.activo}" class="badge-soft-secondary">Inactivo</span>
+                        </div>
+
+                        <h5 class="fw-bold mb-3" th:text="${evento.nombre}">Nombre</h5>
+
+                        <p class="text-muted small-card-text mb-4" th:text="${evento.descripcion}">
+                            Descripción del evento
+                        </p>
+
+                        <div class="info-row mb-2">
+                            <i class="fa-solid fa-calendar me-2"></i>
+                            <span th:text="${evento.fecha}">2026-06-15</span>
+                        </div>
+
+                        <div class="info-row">
+                            <i class="fa-solid fa-users me-2"></i>
+                            <span>Capacidad: </span>
+                            <strong class="ms-1" th:text="${evento.capacidad}">50</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-box" th:if="${eventos == null or #lists.isEmpty(eventos)}">
+            <i class="fa-solid fa-calendar-xmark fa-2x mb-3 text-secondary"></i>
+            <h5 class="fw-bold">No hay eventos registrados</h5>
+            <p class="mb-0">Agregue un evento para comenzar.</p>
+        </div>
     </div>
 </div>
 

@@ -4,58 +4,58 @@
 <head th:replace="~{general/fragmentos :: head('Eventos')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Gestión de eventos', 'Visualice y administre los eventos disponibles')}"></header>
+<header th:replace="~{general/fragmentos :: hero('Gestión de eventos', 'Supervise la actividad, disponibilidad y detalles de cada evento')}"></header>
 
-<div class="container">
+<div class="container pb-5">
     <div class="section-box">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
             <div>
-                <h3 class="fw-bold mb-1">Listado de eventos</h3>
-                <p class="text-muted mb-0">Consulte toda la información de cada evento</p>
+                <h3 class="fw-bold mb-1">Panel de eventos</h3>
+                <p class="text-muted mb-0">Consulte, actualice o elimine eventos registrados</p>
             </div>
 
-            <div class="page-actions" sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')">
-                <a th:href="@{/eventos/nuevo}" class="btn btn-rosa rounded-pill px-4">
-                    <i class="fa-solid fa-plus me-2"></i>Nuevo evento
-                </a>
-            </div>
+            <a sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')" th:href="@{/eventos/nuevo}" class="btn btn-rosa rounded-pill px-4">
+                <i class="fa-solid fa-plus me-2"></i>Nuevo evento
+            </a>
         </div>
 
         <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
 
-        <div class="table-responsive" th:if="${eventos != null and !#lists.isEmpty(eventos)}">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Fecha</th>
-                        <th>Capacidad</th>
-                        <th>Estado</th>
-                        <th sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="evento : ${eventos}">
-                        <td th:text="${evento.id}"></td>
-                        <td th:text="${evento.nombre}"></td>
-                        <td th:text="${evento.descripcion}"></td>
-                        <td th:text="${evento.fecha}"></td>
-                        <td th:text="${evento.capacidad}"></td>
-                        <td>
-                            <span th:if="${evento.activo}" class="badge-soft-success">Activo</span>
-                            <span th:if="${!evento.activo}" class="badge-soft-secondary">Inactivo</span>
-                        </td>
-                        <td sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')">
-                            <div class="table-actions">
-                                <a th:href="@{/eventos/editar/{id}(id=${evento.id})}" class="btn btn-warning btn-sm rounded-pill text-white">Editar</a>
-                                <a th:href="@{/eventos/eliminar/{id}(id=${evento.id})}" class="btn btn-danger btn-sm rounded-pill">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="table-shell" th:if="${eventos != null and !#lists.isEmpty(eventos)}">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Capacidad</th>
+                            <th>Estado</th>
+                            <th sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="evento : ${eventos}">
+                            <td th:text="${evento.id}"></td>
+                            <td class="fw-semibold" th:text="${evento.nombre}"></td>
+                            <td class="text-muted" th:text="${evento.descripcion}"></td>
+                            <td th:text="${evento.fecha}"></td>
+                            <td th:text="${evento.capacidad}"></td>
+                            <td>
+                                <span th:if="${evento.activo}" class="badge-soft-success">Activo</span>
+                                <span th:if="${!evento.activo}" class="badge-soft-secondary">Inactivo</span>
+                            </td>
+                            <td sec:authorize="hasAnyRole('ADMIN','ORGANIZADOR')">
+                                <div class="table-actions">
+                                    <a th:href="@{/eventos/editar/{id}(id=${evento.id})}" class="btn btn-warning btn-sm rounded-pill text-white">Editar</a>
+                                    <a th:href="@{/eventos/eliminar/{id}(id=${evento.id})}" class="btn btn-danger btn-sm rounded-pill">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="empty-box" th:if="${eventos == null or #lists.isEmpty(eventos)}">

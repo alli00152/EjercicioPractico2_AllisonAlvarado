@@ -3,12 +3,15 @@
 <head th:replace="~{general/fragmentos :: head('Consultas')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Consultas avanzadas', 'Explore información relevante de usuarios y eventos')}"></header>
+<header th:replace="~{general/fragmentos :: hero('Consultas avanzadas', 'Obtenga resultados rápidos y claros sobre usuarios y eventos')}"></header>
 
-<div class="container">
+<div class="container pb-5">
     <div class="row g-4 mb-4">
         <div class="col-lg-6">
-            <div class="section-box">
+            <div class="query-card">
+                <div class="query-icon">
+                    <i class="fa-solid fa-toggle-on"></i>
+                </div>
                 <h5 class="fw-bold mb-3">Buscar eventos por estado</h5>
                 <form th:action="@{/consultas/eventos-estado}" method="post">
                     <select name="activo" class="form-select mb-3" required>
@@ -21,7 +24,10 @@
         </div>
 
         <div class="col-lg-6">
-            <div class="section-box">
+            <div class="query-card">
+                <div class="query-icon">
+                    <i class="fa-solid fa-calendar-range"></i>
+                </div>
                 <h5 class="fw-bold mb-3">Buscar eventos por rango de fechas</h5>
                 <form th:action="@{/consultas/eventos-fecha}" method="post">
                     <input type="date" name="fechaInicio" class="form-control mb-2" required>
@@ -32,7 +38,10 @@
         </div>
 
         <div class="col-lg-6">
-            <div class="section-box">
+            <div class="query-card">
+                <div class="query-icon">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                </div>
                 <h5 class="fw-bold mb-3">Buscar usuarios por rol</h5>
                 <form th:action="@{/consultas/usuarios-rol}" method="post">
                     <select name="rol" class="form-select mb-3" required>
@@ -46,7 +55,10 @@
         </div>
 
         <div class="col-lg-6">
-            <div class="section-box">
+            <div class="query-card">
+                <div class="query-icon">
+                    <i class="fa-solid fa-search"></i>
+                </div>
                 <h5 class="fw-bold mb-3">Buscar eventos por nombre</h5>
                 <form th:action="@{/consultas/eventos-nombre}" method="post">
                     <input type="text" name="nombre" class="form-control mb-3" placeholder="Digite una parte del nombre" required>
@@ -56,9 +68,14 @@
         </div>
     </div>
 
-    <div class="section-box mb-4">
-        <h5 class="fw-bold mb-1">Cantidad de eventos activos</h5>
-        <p class="mb-0 fs-4" th:text="${conteoActivos}">0</p>
+    <div class="metric-wide mb-4">
+        <div>
+            <p class="metric-label mb-1">Cantidad de eventos activos</p>
+            <h2 class="metric-value mb-0" th:text="${conteoActivos}">0</h2>
+        </div>
+        <div class="metric-wide-icon">
+            <i class="fa-solid fa-chart-pie"></i>
+        </div>
     </div>
 
     <div class="section-box mb-4" th:if="${eventosPorEstado != null}">
