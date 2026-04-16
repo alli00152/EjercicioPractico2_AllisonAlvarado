@@ -1,22 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{general/fragmentos :: head('Detalle usuario')}" ></head>
+<head th:replace="~{general/fragmentos :: head('Detalle usuario')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<div class="container py-5">
-    <div class="card shadow border-0">
-        <div class="card-body p-4">
-            <h3 class="mb-4">Detalle del usuario</h3>
-            <p><strong>ID:</strong> <span th:text="${usuario.id}"></span></p>
-            <p><strong>Nombre:</strong> <span th:text="${usuario.nombre}"></span></p>
-            <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
-            <p><strong>Rol:</strong> <span th:text="${usuario.rol.nombre}"></span></p>
-            <p><strong>Activo:</strong> <span th:text="${usuario.activo ? 'Sí' : 'No'}"></span></p>
-            <p><strong>Fecha de creación:</strong> <span th:text="${usuario.fechaCreacion}"></span></p>
-            <a th:href="@{/usuarios}" class="btn btn-secondary">Volver</a>
+<header th:replace="~{general/fragmentos :: hero('Detalle del usuario', 'Consulte la información completa del registro')}"></header>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="section-box">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">ID</label>
+                        <div class="form-control bg-light" th:text="${usuario.id}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Nombre</label>
+                        <div class="form-control bg-light" th:text="${usuario.nombre}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Correo electrónico</label>
+                        <div class="form-control bg-light" th:text="${usuario.email}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Rol</label>
+                        <div class="form-control bg-light" th:text="${usuario.rol.nombre}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Activo</label>
+                        <div class="form-control bg-light" th:text="${usuario.activo ? 'Sí' : 'No'}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Fecha de creación</label>
+                        <div class="form-control bg-light" th:text="${usuario.fechaCreacion}"></div>
+                    </div>
+                </div>
+
+                <div class="page-actions mt-4">
+                    <a th:href="@{/usuarios}" class="btn btn-outline-rosa rounded-pill px-4">
+                        <i class="fa-solid fa-arrow-left me-2"></i>Volver
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <footer th:replace="~{general/fragmentos :: footer}"></footer>
 <script th:replace="~{general/fragmentos :: scripts}"></script>
 </body>

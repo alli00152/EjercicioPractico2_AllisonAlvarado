@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{general/fragmentos :: head('Login')}" ></head>
+<head th:replace="~{general/fragmentos :: head('Login')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow-lg border-0 card-login">
-                <div class="card-body p-4">
-                    <h2 class="text-center mb-4">Iniciar sesión</h2>
+<div class="container login-wrapper">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 col-lg-4">
+            <div class="card login-card border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <i class="fa-solid fa-user-lock fa-2x" style="color:#cc4f7d;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-1">Iniciar sesión</h2>
+                        <p class="text-muted mb-0">Ingrese sus credenciales para continuar</p>
+                    </div>
 
                     <div class="alert alert-danger" th:if="${param.error}">
                         Credenciales incorrectas.
@@ -18,27 +24,28 @@
                     <div class="alert alert-success" th:if="${param.logout}">
                         Sesión cerrada correctamente.
                     </div>
-                     <form th:action="@{/login}" method="post">
-                        <div class="mb-3">
-                            <label class="form-label">Correo</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-rosa w-100">Ingresar</button>
-                    </form>
 
-                    <div class="mt-4">
-                        <p class="mb-1"><strong>Usuarios de prueba:</strong></p>
-                        <small>Debe crearlos desde BD con contraseña encriptada o por la app.</small>
-                    </div>
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Correo electrónico</label>
+                            <input type="email" name="email" class="form-control" autocomplete="username" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Contraseña</label>
+                            <input type="password" name="password" class="form-control" autocomplete="current-password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-rosa w-100 py-2 rounded-pill">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Ingresar
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <footer th:replace="~{general/fragmentos :: footer}"></footer>
 <script th:replace="~{general/fragmentos :: scripts}"></script>
 </body>

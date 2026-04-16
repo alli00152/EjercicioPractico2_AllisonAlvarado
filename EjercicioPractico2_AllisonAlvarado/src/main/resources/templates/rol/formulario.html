@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{general/fragmentos :: head('Formulario rol')}" ></head>
+<head th:replace="~{general/fragmentos :: head('Formulario rol')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<div class="container py-5">
-    <div class="card shadow border-0">
-        <div class="card-body p-4">
-            <h3 class="mb-4">Formulario de rol</h3>
-            <form th:action="@{/roles/guardar}" th:object="${rol}" method="post">
-                <input type="hidden" th:field="*{id}">
-                <div class="mb-3">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" th:field="*{nombre}" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-rosa">Guardar</button>
-                <a th:href="@{/roles}" class="btn btn-secondary">Volver</a>
-            </form>
+<header th:replace="~{general/fragmentos :: hero('Formulario de rol', 'Cree o edite un rol del sistema')}"></header>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="section-box">
+                <form th:action="@{/roles/guardar}" th:object="${rol}" method="post">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Nombre del rol</label>
+                        <input type="text" th:field="*{nombre}" class="form-control" required>
+                    </div>
+
+                    <div class="page-actions mt-4">
+                        <button type="submit" class="btn btn-rosa rounded-pill px-4">
+                            <i class="fa-solid fa-floppy-disk me-2"></i>Guardar
+                        </button>
+
+                        <a th:href="@{/roles}" class="btn btn-outline-rosa rounded-pill px-4">
+                            <i class="fa-solid fa-arrow-left me-2"></i>Volver
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    </div>
+</div>
+
 <footer th:replace="~{general/fragmentos :: footer}"></footer>
 <script th:replace="~{general/fragmentos :: scripts}"></script>
 </body>

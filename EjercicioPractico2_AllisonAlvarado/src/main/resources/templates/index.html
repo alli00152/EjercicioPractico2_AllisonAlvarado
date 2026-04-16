@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{general/fragmentos :: head('Inicio')}" ></head>
+<head th:replace="~{general/fragmentos :: head('Inicio')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Plataforma de Reservas de Eventos', 'Gestione usuarios, roles y eventos en un solo lugar')}"></header>
+<header th:replace="~{general/fragmentos :: hero('Plataforma de Reservas de Eventos', 'Gestione usuarios, roles y eventos en un entorno moderno y ordenado')}"></header>
 
-<div class="container mb-5">
-    <div class="row g-4">
-        <div class="col-md-4" th:each="evento : ${eventos}">
-            <div class="card tarjeta-evento h-100 shadow-sm border-0">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${evento.nombre}">Nombre</h5>
-                    <p class="card-text" th:text="${evento.descripcion}">Descripción</p>
-                    <p><strong>Fecha:</strong> <span th:text="${evento.fecha}"></span></p>
-                    <p><strong>Capacidad:</strong> <span th:text="${evento.capacidad}"></span></p>
-                    <span class="badge rounded-pill"
-                          th:classappend="${evento.activo} ? 'text-bg-success' : 'text-bg-secondary'"
-                          th:text="${evento.activo} ? 'Activo' : 'Inactivo'">Activo</span>
+<div class="container">
+    <div class="row g-4" th:if="${eventos != null and !#lists.isEmpty(eventos)}">
+        <div class="col-md-6 col-lg-4" th:each="evento : ${eventos}">
+            <div class="card event-card border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold mb-0" th:text="${evento.nombre}">Nombre</h5>
+                        <span th:if="${evento.activo}" class="badge-soft-success">Activo</span>
+                        <span th:if="${!evento.activo}" class="badge-soft-secondary">Inactivo</span>
+                    </div>
+
+                    <p class="text-muted mb-3" th:text="${evento.descripcion}">Descripción</p>
+
+                    <p class="mb-2">
+                        <i class="fa-solid fa-calendar-days me-2 text-secondary"></i>
+                        <span th:text="${evento.fecha}">2026-05-10</span>
+                    </p>
+
+                    <p class="mb-0">
+                        <i class="fa-solid fa-users me-2 text-secondary"></i>
+                        Capacidad:
+                        <span th:text="${evento.capacidad}">100</span>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="section-box empty-box" th:if="${eventos == null or #lists.isEmpty(eventos)}">
+        <i class="fa-solid fa-calendar-xmark fa-2x mb-3 text-secondary"></i>
+        <h5 class="fw-bold">No hay eventos registrados</h5>
+        <p class="mb-0">Cuando agregue eventos, aparecerán aquí.</p>
+    </div>
 </div>
+
 <footer th:replace="~{general/fragmentos :: footer}"></footer>
 <script th:replace="~{general/fragmentos :: scripts}"></script>
 </body>

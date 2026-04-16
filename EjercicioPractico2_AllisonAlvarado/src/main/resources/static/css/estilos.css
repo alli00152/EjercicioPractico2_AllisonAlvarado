@@ -1,57 +1,204 @@
+:root {
+    --rosa-principal: #cc4f7d;
+    --rosa-oscuro: #a63d66;
+    --rosa-claro: #fdeaf1;
+    --rosa-fondo: #fff8fb;
+    --texto-principal: #2e2430;
+    --texto-secundario: #6a5b66;
+    --borde-suave: #f2d8e3;
+    --sombra: 0 10px 30px rgba(86, 31, 58, 0.08);
+    --radio: 18px;
+}
+
 body {
-    background: linear-gradient(180deg, #fff7fb 0%, #fff 100%);
-    color: #4b2e39;
+    background: linear-gradient(180deg, #fff8fb 0%, #ffffff 100%);
+    color: var(--texto-principal);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.barra-rosa {
-    background: linear-gradient(90deg, #d94f8a 0%, #f27db2 100%);
+.navbar-custom {
+    background: linear-gradient(90deg, var(--rosa-oscuro), var(--rosa-principal));
 }
 
-.footer-rosa {
-    background: #ffe1ee;
-    color: #7a294e;
+.hero-section {
+    background: transparent;
 }
 
-.hero-principal {
-    background: linear-gradient(135deg, #ffd1e6 0%, #ffe8f3 100%);
-    color: #7a294e;
+.hero-card {
+    background: #ffffff;
+    border: 1px solid var(--borde-suave);
+    border-radius: 26px;
+    padding: 2.5rem 1.5rem;
+    box-shadow: var(--sombra);
+    max-width: 850px;
+}
+
+.footer-custom {
+    background: #ffffff;
+    border-top: 1px solid var(--borde-suave);
+}
+
+.card,
+.form-control,
+.form-select,
+.table,
+.alert,
+textarea {
+    border-radius: var(--radio) !important;
+}
+
+.card {
+    border: 1px solid var(--borde-suave);
+    box-shadow: var(--sombra);
 }
 
 .btn-rosa {
-    background-color: #d94f8a;
-     color: white;
+    background: linear-gradient(90deg, var(--rosa-oscuro), var(--rosa-principal));
+    color: #ffffff;
     border: none;
 }
 
 .btn-rosa:hover {
-    background-color: #bf3e76;
-    color: white;
+    background: linear-gradient(90deg, #903455, #b8436e);
+    color: #ffffff;
 }
 
-.card,
-.table,
+.btn-outline-rosa {
+    border: 1px solid var(--rosa-principal);
+    color: var(--rosa-principal);
+    background: #ffffff;
+}
+
+.btn-outline-rosa:hover {
+    background: var(--rosa-principal);
+    color: #ffffff;
+}
+
 .form-control,
-.form-select {
-    border-radius: 16px;
+.form-select,
+textarea {
+    border: 1px solid var(--borde-suave);
+    padding: 0.8rem 0.95rem;
 }
 
-.tarjeta-evento {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+    border-color: var(--rosa-principal);
+    box-shadow: 0 0 0 0.2rem rgba(204, 79, 125, 0.15);
 }
 
-.tarjeta-evento:hover {
-     transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 18px 35px rgba(217, 79, 138, 0.18) !important;
-}
-
-.card-login {
-    border-radius: 20px;
+.section-box {
+    background: #ffffff;
+    border: 1px solid var(--borde-suave);
+    border-radius: 24px;
+    box-shadow: var(--sombra);
+    padding: 1.5rem;
 }
 
 .table thead {
-    background-color: #ffe1ee;
+    background-color: var(--rosa-claro);
 }
 
+.table th {
+    border-bottom: none;
+    color: var(--texto-principal);
+    font-weight: 700;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.login-wrapper {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+}
+
+.login-card {
+    border: 1px solid var(--borde-suave);
+    border-radius: 24px;
+    box-shadow: var(--sombra);
+    background: #ffffff;
+}
+
+.event-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+}
+
+.event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(86, 31, 58, 0.12);
+}
+
+.badge-soft-success {
+    background: #d9f3e4;
+    color: #206b43;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-soft-secondary {
+    background: #ececef;
+    color: #5e5e5e;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.page-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.table-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.empty-box {
+    text-align: center;
+    padding: 2rem;
+    color: var(--texto-secundario);
+}
+.list-group-item {
+    border-radius: 14px !important;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--borde-suave);
+}
+
+.form-check-input:checked {
+    background-color: var(--rosa-principal);
+    border-color: var(--rosa-principal);
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+}
+
+.navbar .nav-link:hover {
+    opacity: 0.9;
+}
+
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.table-responsive {
+    border-radius: 18px;
+    overflow: hidden;
+}
 
 
 

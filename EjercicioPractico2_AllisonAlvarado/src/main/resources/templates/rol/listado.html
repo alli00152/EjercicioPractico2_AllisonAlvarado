@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{general/fragmentos :: head('Roles')}" ></head>
+<head th:replace="~{general/fragmentos :: head('Roles')}"></head>
 <body>
 <nav th:replace="~{general/fragmentos :: navbar}"></nav>
-<header th:replace="~{general/fragmentos :: hero('Gestión de roles', 'Administración completa de roles del sistema')}"></header>
+<header th:replace="~{general/fragmentos :: hero('Gestión de roles', 'Controle los roles disponibles en el sistema')}"></header>
+
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Listado de roles</h3>
-        <a th:href="@{/roles/nuevo}" class="btn btn-rosa">Nuevo rol</a>
-    </div>
+    <div class="section-box">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h3 class="fw-bold mb-1">Listado de roles</h3>
+                <p class="text-muted mb-0">Administre permisos y perfiles del sistema</p>
+            </div>
 
-    <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
+            <div class="page-actions">
+                <a th:href="@{/roles/nuevo}" class="btn btn-rosa rounded-pill px-4">
+                    <i class="fa-solid fa-plus me-2"></i>Nuevo rol
+                </a>
+            </div>
+        </div>
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
+        <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+        <div class="table-responsive" th:if="${roles != null and !#lists.isEmpty(roles)}">
             <table class="table table-hover align-middle">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Acciones</th>
-                </tr>
-                 </thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
                 <tbody>
-                <tr th:each="rol : ${roles}">
-                    <td th:text="${rol.id}"></td>
-                    <td th:text="${rol.nombre}"></td>
-                    <td>
-                        <a th:href="@{/roles/editar/{id}(id=${rol.id})}" class="btn btn-sm btn-warning">Editar</a>
-                        <a th:href="@{/roles/eliminar/{id}(id=${rol.id})}" class="btn btn-sm btn-danger">Eliminar</a>
-                    </td>
-                </tr>
+                    <tr th:each="rol : ${roles}">
+                        <td th:text="${rol.id}"></td>
+                        <td th:text="${rol.nombre}"></td>
+                        <td>
+                            <div class="table-actions">
+                                <a th:href="@{/roles/editar/{id}(id=${rol.id})}" class="btn btn-warning btn-sm rounded-pill text-white">Editar</a>
+                                <a th:href="@{/roles/eliminar/{id}(id=${rol.id})}" class="btn btn-danger btn-sm rounded-pill">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
+
+        <div class="empty-box" th:if="${roles == null or #lists.isEmpty(roles)}">
+            <i class="fa-solid fa-user-shield fa-2x mb-3 text-secondary"></i>
+            <h5 class="fw-bold">No hay roles registrados</h5>
+            <p class="mb-0">Agregue un rol para comenzar.</p>
+        </div>
     </div>
 </div>
+
 <footer th:replace="~{general/fragmentos :: footer}"></footer>
 <script th:replace="~{general/fragmentos :: scripts}"></script>
 </body>
